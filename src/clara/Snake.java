@@ -27,6 +27,7 @@ public class Snake extends TimerTask implements KeyListener {
     SnakePanel snakePanel;
 
     int[] nextMove;
+    int[] prevMove;
 
     public static void main(String args[]) {
         Snake snakeGame = new Snake();
@@ -105,6 +106,9 @@ public class Snake extends TimerTask implements KeyListener {
         }
 
         else {
+
+            prevMove = nextMove;
+
             int headX = snake.get(0)[0];
             int headY = snake.get(0)[1];
 
@@ -174,16 +178,16 @@ public class Snake extends TimerTask implements KeyListener {
     public void keyPressed(KeyEvent e) {
 
         //If snake is {0, 1} should not permit {0, -1} to stop snake reversing, same for other directions
-        if (e.getKeyCode() == KeyEvent.VK_DOWN && nextMove[1] != -1) {
+        if (e.getKeyCode() == KeyEvent.VK_DOWN && prevMove[1] != -1) {
             nextMove = new int[]{0, 1};
         }
-        if (e.getKeyCode() == KeyEvent.VK_UP && nextMove[1] != 1) {
+        if (e.getKeyCode() == KeyEvent.VK_UP && prevMove[1] != 1) {
             nextMove = new int[]{0, -1};
         }
-        if (e.getKeyCode() == KeyEvent.VK_LEFT && nextMove[0] != 1) {
+        if (e.getKeyCode() == KeyEvent.VK_LEFT && prevMove[0] != 1) {
             nextMove = new int[]{-1, 0};
         }
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT && nextMove[0] != 1) {
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT && prevMove[0] != -1) {
             nextMove = new int[]{1, 0};
         }
 
