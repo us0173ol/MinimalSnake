@@ -23,6 +23,9 @@ public class Snake extends TimerTask implements KeyListener {
 
     int gameOver = 0;   // 0 = game playing, greater than 0 = game over. Set by run() to indicate state of game and read by paintComponent() to figure out what to draw - game, or the game over scree, or game won screen?
 
+    int clockTicksToRestart = 6;    //How many ticks after game over before restart?
+    int youWin = 10;    // Wait a little longer if user wins the game, to allow time to display 'you win' message
+
     LinkedList<int[]> snake = new LinkedList<int[]>();
     SnakePanel snakePanel;
 
@@ -113,14 +116,14 @@ public class Snake extends TimerTask implements KeyListener {
             int[] newHead = {headX + nextMove[0], headY + nextMove[1]};   //create new head
 
             if (contains(newHead, snake)) {   //Is new head in snake? Snake ran into it's own body, game over.
-                gameOver = 6;                 // A positive value means the game is considered over. If this is positive, run() decreases it by 1 every time to provide a 'countdown' to the next game.
+                gameOver = clockTicksToRestart;                 // A positive value means the game is considered over. If this is positive, run() decreases it by 1 every time to provide a 'countdown' to the next game.
             }
 
             snake.add(0, newHead);   //Otherwise, add new head to snake
 
             if (snake.size() == xSquares * ySquares) {    //If snake fills board, then win!
                 //you won!
-                gameOver = 10;    //Big value so can be distinguished from gameOver = 6 which means game is lost.  You could change these numbers to change the delay between games.
+                gameOver = youWin;    //Big value so can be distinguished from gameOver = 6 which means game is lost.  You could change these numbers to change the delay between games.
                 return;
             }
 
@@ -133,7 +136,7 @@ public class Snake extends TimerTask implements KeyListener {
             headY = newHead[1];
 
             if ((headX < 0 || headX > xSquares) || (headY < 0 || headY > ySquares)) {   //Head outside board? Snake hit wall, game over
-                gameOver = 6;
+                gameOver = clockTicksToRestart;
                 return;
             }
 
@@ -197,7 +200,7 @@ public class Snake extends TimerTask implements KeyListener {
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {}    //Don't need
+    public void keyReleased(KeyEvent e) {}    // Program doesn't need these but KeyListener requires we implement all methods
     @Override
     public void keyTyped(KeyEvent e) {}
 
