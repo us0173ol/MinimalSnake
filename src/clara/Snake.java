@@ -67,7 +67,7 @@ public class Snake extends TimerTask implements KeyListener {
             super.paintComponent(g);
 
             g.clearRect(0, 0, width, height);    //Clear panel, fill with black
-            g.setColor(Color.BLACK);
+            g.setColor(Color.ORANGE);
             g.fillRect(0, 0, width, height);
 
             if (gameOver > 6) {                 // If gameOver indicates game is won, display message
@@ -89,7 +89,7 @@ public class Snake extends TimerTask implements KeyListener {
                 g.setColor(Color.WHITE);
                 g.fillRect(kibble[0] * squareSize, kibble[1] * squareSize, squareSize, squareSize);
 
-                g.setColor(Color.ORANGE);
+                g.setColor(Color.BLACK);
                 for (int[] square : snake) {
                     g.fillRect(square[0] * squareSize, square[1] * squareSize, squareSize, squareSize);
                 }
